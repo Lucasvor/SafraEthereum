@@ -95,6 +95,7 @@ public class ECDSASignature
         seq.AddObject(new DerInteger(R));
         seq.AddObject(new DerInteger(S));
 
+        seq.Close();
 //#if !LATEST_BOUNCYCASTLE
 //        seq.c
 //#endif

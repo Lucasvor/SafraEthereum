@@ -28,7 +28,7 @@ public abstract class Asn1Generator
     public abstract void AddObject(Asn1Object obj);
 
     public abstract Stream GetRawOutputStream();
-
+    public abstract void Close();
     #region IDisposable
 
     public void Dispose()

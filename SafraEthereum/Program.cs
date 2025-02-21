@@ -2,9 +2,11 @@
 using SafraBC.Crypto.Digests;
 using SafraBC.Math;
 using SafraBC.Math.EC;
+using SafraBC.Model;
 using SafraBC.Security;
 using SafraBC.Signer;
 using SafraBC.Util;
+using System.Net;
 using System.Text.RegularExpressions;
 
 class Program
@@ -28,6 +30,37 @@ class Program
         Console.WriteLine($"Chave publica  Nethereum: {publicKey.ToHex()}");
         Console.WriteLine($"Chave privada  Nethereum: {privateKey}");
         Console.WriteLine("Teste --- Teste\n\n\n\n");
+
+        //Assinatura
+        // Cria a transação EIP-1559
+
+        // Parâmetros da transação conforme o payload
+        var chainId = 1; 
+        System.Numerics.BigInteger nonce = 0;
+        System.Numerics.BigInteger gasLimit = 21000;
+        System.Numerics.BigInteger maxFeePerGas = 300;
+        System.Numerics.BigInteger maxPriorityFeePerGas = 10;
+        System.Numerics.BigInteger value = 10000000000;
+        var toAddress = "0xac03bb73b6a9e108530aff4df5077c2b3d481e5a";
+
+        var transaction = new Transaction1559(
+                chainId,
+                nonce,
+                maxPriorityFeePerGas,
+                maxFeePerGas,
+                gasLimit,
+                toAddress,
+                value, 
+                string.Empty, 
+                new List<AccessListItem>()
+            );
+
+
+        var signer = new Transaction1559Signer();
+        var signedTransaction = signer.SignTransaction(privateKey, transaction);
+
+        Console.WriteLine("Transação assinada:");
+        Console.WriteLine(signedTransaction);
     }
     public static void GerarChaveSemBibliotecaNethereum()
     {

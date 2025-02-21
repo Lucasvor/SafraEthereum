@@ -40,4 +40,8 @@ public class DerSequenceGenerator
     {
         return _bOut;
     }
+    public override void Close()
+    {
+        WriteDerEncoded(48, _bOut.ToArray());
+    }
 }
